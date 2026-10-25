@@ -15,6 +15,7 @@
 		}
 	],
 	"workers_dev": true,
+	"routes": [{ "pattern": "ituiku.sol-momma.com", "custom_domain": true }],
 	"preview_urls": false,
 	"observability": { "enabled": true }
 }
