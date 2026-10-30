@@ -23,3 +23,26 @@ Issueには必ずラベルを付ける。種類から1つ（bug/feature/docs/cho
 - 担当：ai＝AIがやる / soyu＝壮宇さんがやる
 
 - 公開ルール：workers.devのURLは使わず、必ずsol-momma.comのサブドメイン（Cloudflareのカスタムドメイン）で公開する（workers_dev = false）。
+
+## 目的
+候補日が多くても30秒で答えられる、ログイン不要の日程調整Webアプリ「いついく？」。公開先は https://ituiku.sol-momma.com 。
+
+## コマンド（入口は Makefile）
+- `make setup`：依存を入れる（pnpm。npm・yarn のロックファイルは置かない）
+- `make dev`：ローカル起動（http://localhost:3000）
+- `make test`：単体テスト（Vitest）
+- `make lint`：ESLint（2026-10-30時点で既存の指摘が1件あり、verifyには入れていない）
+- `make verify`：型チェック（next typegen＋tsc）＋単体テスト。コミット前に必ず通す。CIも同じ
+- `make build`：next build
+- `make deploy`：Cloudflare Workers（OpenNext）へ公開
+
+## 「正しい」の定義
+- `make verify` と `make build` が通り、CIが緑。
+- 集計（`src/lib`）を変えたら `tests/lib/` にテストを足す。
+
+## どこに何があるか
+- `src/app` 画面、`src/actions` Server Actions、`src/components` 部品、`src/lib` スキーマ・集計・Supabase、`supabase/migrations` DB、`tests/lib` テスト
+
+## ルール
+- PRは作らずmainへ直接push。force pushしない。
+- 秘密の値（`SUPABASE_SERVICE_ROLE_KEY` など）をリポジトリに入れない・表示しない。

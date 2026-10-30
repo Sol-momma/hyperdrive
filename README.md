@@ -1,69 +1,70 @@
-# いついく？ (Itsuiku)
+# いついく？（Itsuiku）
 
-候補日が多くても30秒で答えられる、スマホ向けの日程調整Webアプリです。ログイン不要で、URLを送るだけで投票と集計ができます。
+候補日が多くても30秒で答えられる、スマホ向けの日程調整Webアプリです。ログイン不要で、URLを送るだけで出欠の回答と集計ができます。飲み会や集まりの日を、候補が多くても手早く決めるために作りました。
 
-A mobile-first scheduling web app for picking a date for dinners and get-togethers. No sign-up: share a URL, everyone answers yes, maybe or no for the candidate dates, and the dates are ranked by attendance.
+公開先: https://ituiku.sol-momma.com
 
-Live: https://ituiku-snowy.vercel.app
-
-| Desktop | Mobile (create an event) |
+| PC | スマホ（イベント作成） |
 | --- | --- |
-| ![Top page](docs/images/home.png) | ![Create event on mobile](docs/images/new-mobile.png) |
+| ![トップ画面](docs/images/home.png) | ![スマホでのイベント作成](docs/images/new-mobile.png) |
 
-## Features
+## できること
 
-- Create an event with many candidate dates using a custom calendar (tap single days or add a range)
-- Share one URL; participants answer without an account
-- Three answers per date: yes, maybe, no
-- Bulk and range voting, so even 30 dates take only a few taps
-- Results ranked by attendance with stacked bar charts
-- The event owner can close voting and pick the date
-- Recently opened events are remembered in the browser (localStorage)
+- 独自のカレンダーで候補日をまとめて作成（1日ずつタップ、または範囲で追加）
+- URLを1つ共有するだけで、参加者はアカウントなしで回答
+- 候補日ごとに「○・△・×」の3択
+- まとめて・範囲で回答できるので、候補が30日あっても数タップ
+- 参加人数順のランキングと積み上げ棒グラフで結果を表示
+- 主催者は回答を締め切って日程を決められる
+- 最近開いたイベントをブラウザ（localStorage）に記録
 
-## Tech stack
+## 技術構成
 
-- [Next.js](https://nextjs.org/) 16 (App Router) and TypeScript, React 19
-- [Tailwind CSS](https://tailwindcss.com/) v4
-- [Supabase](https://supabase.com/) (Postgres), accessed from Server Actions
-- [Zod](https://zod.dev/) for input validation
-- [Vitest](https://vitest.dev/) for unit tests, [Biome](https://biomejs.dev/) for lint and format
-- Hosted on [Vercel](https://vercel.com/)
+- Next.js 16（App Router）・React 19・TypeScript
+- Tailwind CSS v4
+- Supabase（Postgres）を Server Actions から利用
+- Zod で入力チェック
+- Vitest で単体テスト、ESLint
+- Cloudflare Workers（OpenNext）で公開
 
-## Getting started
+## 動かし方
 
-The repository uses npm (`package-lock.json`). Node.js 24 or later is recommended.
+Node.js 24 と pnpm を使います。
 
 ```sh
 git clone https://github.com/Sol-momma/hyperdrive.git
 cd hyperdrive
-npm ci
-npm test          # 53 unit tests
-npm run build
-npm run dev       # http://localhost:3000
+make setup     # pnpm install
+make verify    # 型チェック＋単体テスト（CIと同じ）
+make build     # next build
+make dev       # http://localhost:3000
 ```
 
-The top page and the event form work without a database. To create and vote on events locally, create a Supabase project, run [supabase/migrations/0001_init.sql](supabase/migrations/0001_init.sql) in its SQL editor, and put these in `.env.local` with your own project's values:
+トップ画面とイベント作成フォームはデータベースなしで動きます。ローカルでイベントの作成・回答まで試すときは、Supabaseのプロジェクトを作り、[supabase/migrations/0001_init.sql](supabase/migrations/0001_init.sql) をSQLエディタで実行して、`.env.local` に自分の値を入れます。
 
 - `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY` (server only; never expose it to the browser)
+- `SUPABASE_SERVICE_ROLE_KEY`（サーバー専用。ブラウザに出さない）
 
-## Project structure
+## デプロイ
+
+`make deploy`（`opennextjs-cloudflare build && deploy`）。公開先は `wrangler.jsonc` のカスタムドメイン `ituiku.sol-momma.com` です。
+
+## フォルダ構成
 
 ```text
 src/
-├── app/            # pages: top, /new, /event/[eventId], /event/[eventId]/respond
-├── actions/        # Server Actions (create event, submit response, close event)
-├── components/     # calendar, voting form, ranking chart, header, sidebar
-├── lib/            # schemas, scoring, date formatting, Supabase client
+├── app/            # 画面：トップ、/new、/event/[eventId]、/event/[eventId]/respond
+├── actions/        # Server Actions（作成・回答・締め切り）
+├── components/     # カレンダー、回答フォーム、ランキング、ヘッダー
+├── lib/            # スキーマ、集計、日付の表示、Supabaseクライアント
 └── types/
-supabase/migrations/  # database schema
-tests/lib/            # unit tests
-docs/                 # strengths write-up and README images
+supabase/migrations/  # DBスキーマ
+tests/lib/            # 単体テスト
+docs/                 # 設計の考え方と画像
 ```
 
-More background on the design choices is in [docs/strengths.md](docs/strengths.md) (Japanese).
+設計の考え方は [docs/strengths.md](docs/strengths.md)。
 
-## License
+## ライセンス
 
-No license has been chosen yet; all rights reserved by Sol-momma.
+まだ決めていません（All rights reserved）。
