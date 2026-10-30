@@ -14,7 +14,7 @@
 			"service": "ituiku"
 		}
 	],
-	"workers_dev": true,
+	"workers_dev": false,
 	"routes": [{ "pattern": "ituiku.sol-momma.com", "custom_domain": true }],
 	"preview_urls": false,
 	"observability": { "enabled": true }

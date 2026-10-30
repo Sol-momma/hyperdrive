@@ -21,3 +21,5 @@ This version has breaking changes — APIs, conventions, and file structure may 
 Issueには必ずラベルを付ける。種類から1つ（bug/feature/docs/chore）と担当から1つ（ai/soyu）。
 - 種類：bug＝不具合 / feature＝新機能・改善 / docs＝文書 / chore＝雑務・設定
 - 担当：ai＝AIがやる / soyu＝壮宇さんがやる
+
+- 公開ルール：workers.devのURLは使わず、必ずsol-momma.comのサブドメイン（Cloudflareのカスタムドメイン）で公開する（workers_dev = false）。
