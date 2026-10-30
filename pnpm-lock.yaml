@@ -6,7 +6,7 @@ settings:
 
 overrides:
   undici: ^7.30.1
-  vite: ^8.1.6
+  vite: ^8.3.5
 
 importers:
 
@@ -1762,7 +1762,7 @@ packages:
     resolution: {integrity: sha512-fKShNpKZzupWZuY0z7egydvL0sqW4INEZBEExMBMAa6izlENEVHwoXgdaTCaBZ5fwlr4xf2o1wXC83n9RpO+NA==}
     peerDependencies:
       msw: ^2.4.9
-      vite: ^8.1.6
+      vite: ^8.3.5
     peerDependenciesMeta:
       msw:
         optional: true
@@ -3700,7 +3700,7 @@ packages:
       '@vitest/ui': 4.1.12
       happy-dom: '*'
       jsdom: '*'
-      vite: ^8.1.6
+      vite: ^8.3.5
     peerDependenciesMeta:
       '@edge-runtime/vm':
         optional: true
